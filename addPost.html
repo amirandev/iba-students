@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Post</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-XXF7VzBtDlZcV+ShP73JZ7VzXdKjXyz7ysR/m1MGMzrKoJpfgitq+3DdFgQO1VYfpx+/8KqE5RSvJ2C5+5IJ5Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Add Post</h1>
+        <form id="addPostForm">
+            <div class="mb-3">
+                <label for="studentId" class="form-label">Student ID</label>
+                <input type="number" class="form-control" id="studentId" name="student_id" required>
+            </div>
+            <div class="mb-3">
+                <label for="postText" class="form-label">Post Text</label>
+                <textarea class="form-control" id="postText" name="text" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-ICRG1Tu+3qXJQfUBC8N+syQZTz40gdGmvw1Jvw8D+iSm7VdTM/xBREo7sTbs8TupWz2ZTbcxOuBwGV0DlSD0Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const addPostForm = document.getElementById('addPostForm');
+
+        addPostForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const studentId = document.getElementById('studentId').value;
+            const postText = document.getElementById('postText').value;
+
+            const response = await fetch('https://amirandev.com/study/api/posts/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ student_id: studentId, text: postText })
+            });
+
+            const responseData = await response.json();
+            if (responseData.status === 1) {
+                alert(`Post added successfully with ID ${responseData.data.id}`);
+                addPostForm.reset();
+            } else {
+                alert(responseData.message);
+            }
+        });
+    </script>
+</body>
+</html>
