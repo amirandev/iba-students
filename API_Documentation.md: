@@ -1,0 +1,19 @@
+# API Documentation
+
+You can use the following API routes to interact with our system:
+
+## Get List of Students
+
+### Method: GET
+
+### URL: /students
+
+### Description:
+
+Returns a list of all students that match the search string in their names.
+
+### Parameters:
+
+- search (string) - The search string to match against student names.
+
+### Example:
