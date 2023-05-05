@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Student - My School</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/css/bootstrap.min.css" integrity="sha512-DNv+SKBNr/AmrePn8yAYJ/1w3pbj3bE/bLm5WYFe5iPQjQdIZtoRrkH8W1b0a+f3qzqEg5SL5hYer5vnvHksxQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/js/bootstrap.min.js" integrity="sha512-4d4FL+6ZIXV6UjOLN1uTcNfNk2fdV7icNzzmyJQg7RZB9EnZI7H+bwk3dDp7mbF8mNxKTR+Pw+rMEt/+zzN3qA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4">Add Student</h1>
+    <form id="add-student-form">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" required>
+      </div>
+      <div class="mb-3">
+        <label for="avatar" class="form-label">Avatar URL</label>
+        <input type="text" class="form-control" id="avatar" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('add-student-form');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const nameInput = document.getElementById('name');
+      const avatarInput = document.getElementById('avatar');
+
+      try {
+        const response = await fetch('https://amirandev.com/study/api/students/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: nameInput.value,
+            avatar: avatarInput.value
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 1) {
+          alert(`Student added successfully with ID: ${data.data.id}`);
+          // Clear the form inputs
+          nameInput.value = '';
+          avatarInput.value = '';
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
+    });
+  </script>
+</body>
+</html>
