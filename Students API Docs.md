@@ -88,7 +88,6 @@ Adds a new student.
 | Parameter | Type   | Description                                       |
 | --------- | ------ | ------------------------------------------------- |
 | name      | string | Required. The name of the new student.            |
-| password  | string | Required. The password for the new student.       |
 | avatar    | string | Optional. The URL of the avatar for the new student. |
 
 #### Response
